@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+
+<nav class="admin-nav">
+  <a href="{{ path('app_home') }}" class="nav-brand">
+    <span class="brand-dot"></span>
+    Admin
+  </a>
+  <div class="nav-links">
+    <div class="nav-group">
+      <a href="{{ path('app_event') }}" class="nav-page-btn">Events</a>
+    </div>
+    <div class="nav-group">
+      <a href="{{ path('app_news') }}" class="nav-page-btn">News</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <form action="{{ path('app_logout') }}" method="post">
+      <button type="submit">Se deconnecter</button>
+    </form>
+  </div>
+</nav>
+
+<div class="admin-content">
+
+  <h1>Admin Pannels</h1>
+  <p>Gerez vos evenements et actualites.</p>
+
+  <h2>Emploi du temps</h2>
+
+  {% for promo, jours in emploiDuTemps %}
+
+    <h3>Promo : {{ promo }}</h3>
+
+    <div class="jours-container">
+
+      {% for jour, events in jours %}
+
+        <div class="jour-colonne">
+
+          <h4>{{ jour|date('d/m/Y') }}</h4>
+
+          {% for event in events %}
+
+            <p>
+              <strong>{{ event.dateDebut|date('H:i') }} - {{ event.dateFin|date('H:i') }}</strong><br>
+              Cours : {{ event.titre }}<br>
+              Salle : {{ event.salle }}<br>
+              Intervenant : {{ event.intervenant }}
+            </p>
+
+            {% if event.isActif %}
+              <form action="{{ path('app_depublier_event', {id: event.id}) }}" method="post">
+                <button type="submit">Depublier</button>
+              </form>
+            {% else %}
+              <form action="{{ path('app_publier_event', {id: event.id}) }}" method="post">
+                <button type="submit">Publier</button>
+              </form>
+            {% endif %}
+
+          {% endfor %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  {% else %}
+    <p>Pas encore d evenement cree.</p>
+  {% endfor %}
+
+  <h2>Actualites</h2>
+
+  {% for actu in news %}
+
+    <div class="news-item">
+      <strong>{{ actu.titre }}</strong>
+      <p>{{ actu.contenu }}</p>
+      <small>{{ actu.dateDebut|date('d/m/Y') }}</small>
+
+      {% if actu.actif %}
+        <form action="{{ path('app_depublier_news', {id: actu.id}) }}" method="post">
+          <button type="submit">Depublier</button>
+        </form>
+      {% else %}
+        <form action="{{ path('app_publier_news', {id: actu.id}) }}" method="post">
+          <button type="submit">Publier</button>
+        </form>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <p>Pas encore de news en base.</p>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+<div>
+
+  <h1>Emploi du temps</h1>
+
+  {% for promo, jours in emploiDuTemps %}
+
+    <h2>Promo : {{ promo }}</h2>
+
+    <div class="jours-container">
+
+      {% for jour, events in jours %}
+
+        <div class="jour-colonne">
+
+          <h3>{{ jour|date('d/m/Y') }}</h3>
+
+          {% for event in events %}
+
+            <div class="event-item">
+              <strong>{{ event.dateDebut|date('H:i') }} - {{ event.dateFin|date('H:i') }}</strong><br>
+              {{ event.titre }}<br>
+              salle : {{ event.salle }}<br>
+              intervenant : {{ event.intervenant }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  {% else %}
+    <p>Pas encore d evenement publie.</p>
+  {% endfor %}
+
+  <h1>Actualites</h1>
+  {% for actu in news %}
+  <div class="actu-item">
+    <strong>{{ actu.titre }}</strong>
+    <p>{{ actu.contenu }}</p>
+    <small>{{ actu.dateDebut|date('d/m/Y') }}</small>
+  </div>
+{% endfor %}
+  {% for actu in actualites %}
+
+    <div class="actu-item">
+      <strong>{{ actu.titre }}</strong>
+      <p>{{ actu.description }}</p>
+      <small>{{ actu.date }}</small>
+    </div>        
+
+  {% endfor %} 
+  
+  
+
+
+{% endblock %}

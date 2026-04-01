@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block body %}
+
+<div>
+    <h1>{{ news is defined and news.id ? 'Modifier' : 'Creer' }} une actualite</h1>
+</div>
+
+<div>
+    <a href="{{ path('app_admin') }}">Retour admin</a>
+</div>
+
+<div>
+    {{ form_start(form) }}
+
+    <div>
+        {{ form_label(form.type, 'Type') }}
+        {{ form_widget(form.type) }}
+        {{ form_errors(form.type) }}
+    </div>
+
+    <div>
+        {{ form_label(form.titre, 'Titre') }}
+        {{ form_widget(form.titre) }}
+        {{ form_errors(form.titre) }}
+    </div>
+
+    <div>
+        {{ form_label(form.contenu, 'Contenu') }}
+        {{ form_widget(form.contenu) }}
+        {{ form_errors(form.contenu) }}
+    </div>
+
+    <div>
+        {{ form_label(form.source, 'Source') }}
+        {{ form_widget(form.source) }}
+        {{ form_errors(form.source) }}
+    </div>
+
+    <div>
+        {{ form_label(form.date_debut, 'Date de debut') }}
+        {{ form_widget(form.date_debut) }}
+        {{ form_errors(form.date_debut) }}
+    </div>
+
+    <div>
+        {{ form_label(form.date_fin, 'Date de fin') }}
+        {{ form_widget(form.date_fin) }}
+        {{ form_errors(form.date_fin) }}
+    </div>
+
+    <div>
+        {{ form_label(form.actif, 'Actif') }}
+        {{ form_widget(form.actif) }}
+        {{ form_errors(form.actif) }}
+    </div>
+
+    <div>
+        <button type="submit">Enregistrer</button>
+        <a href="{{ path('app_admin') }}">Annuler</a>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
